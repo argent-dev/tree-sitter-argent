@@ -292,6 +292,6 @@ let c = Color::Red
 (source_file
   (let_declaration
     name: (identifier)
-    value: (field_access
-      object: (identifier)
-      field: (identifier))))
+    value: (path_expression
+      (identifier)
+      (identifier))))

@@ -266,7 +266,8 @@ bool tree_sitter_argent_external_scanner_scan(void *payload, TSLexer *lexer,
         if (scan_regex_flags(lexer)) return true;
     }
 
-    // Handle newlines
+    // Handle newlines — emit for every newline so the grammar can use them
+    // as optional statement terminators
     if (valid_symbols[NEWLINE]) {
         skip_whitespace(lexer);
 
@@ -280,15 +281,8 @@ bool tree_sitter_argent_external_scanner_scan(void *payload, TSLexer *lexer,
                 lexer->advance(lexer, false);
             }
 
-            // Only emit newline as statement terminator at nesting depth 0
-            if (scanner->paren_depth == 0 && scanner->bracket_depth == 0 &&
-                scanner->brace_depth == 0 && scanner->interp_depth == 0) {
-                lexer->result_symbol = NEWLINE;
-                return true;
-            }
-
-            // Inside brackets — suppress the newline, don't emit token
-            return false;
+            lexer->result_symbol = NEWLINE;
+            return true;
         }
     }
 

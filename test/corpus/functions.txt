@@ -13,10 +13,11 @@ fn greet() {
     name: (identifier)
     parameters: (parameter_list)
     body: (block
-      (call_expression
-        callee: (identifier)
-        arguments: (argument_list
-          (string_literal))))))
+      (expression_statement
+        (call_expression
+          callee: (identifier)
+          arguments: (argument_list
+            (string_literal)))))))
 
 ===============
 Function with params and return type
@@ -42,9 +43,10 @@ fn add(a: i32, b: i32) -> i32 {
           type: (primitive_type))))
     return_type: (primitive_type)
     body: (block
-      (binary_expression
-        (identifier)
-        (identifier)))))
+      (expression_statement
+        (binary_expression
+          (identifier)
+          (identifier))))))
 
 ===============
 Generic function
@@ -72,9 +74,10 @@ fn first<T>(arr: T[]) -> T {
     return_type: (type_identifier
       (identifier))
     body: (block
-      (index_expression
-        object: (identifier)
-        index: (integer_literal)))))
+      (expression_statement
+        (index_expression
+          object: (identifier)
+          index: (integer_literal))))))
 
 ===============
 Public function
@@ -92,7 +95,8 @@ pub fn hello() -> string {
     parameters: (parameter_list)
     return_type: (primitive_type)
     body: (block
-      (string_literal))))
+      (expression_statement
+        (string_literal)))))
 
 ===============
 Function with default parameter
@@ -114,10 +118,11 @@ fn greet(name: string = "world") {
           type: (primitive_type)
           default: (string_literal))))
     body: (block
-      (call_expression
-        callee: (identifier)
-        arguments: (argument_list
-          (identifier))))))
+      (expression_statement
+        (call_expression
+          callee: (identifier)
+          arguments: (argument_list
+            (identifier)))))))
 
 ===============
 Function with trait bounds
@@ -147,7 +152,8 @@ fn display<T: Display + Eq>(x: T) {
           type: (type_identifier
             (identifier)))))
     body: (block
-      (call_expression
-        callee: (identifier)
-        arguments: (argument_list
-          (identifier))))))
+      (expression_statement
+        (call_expression
+          callee: (identifier)
+          arguments: (argument_list
+            (identifier)))))))

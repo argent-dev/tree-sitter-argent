@@ -129,14 +129,15 @@ impl Point {
       return_type: (type_identifier
         (identifier))
       body: (block
-        (struct_literal
-          name: (identifier)
-          (struct_field_value
-            field: (identifier)
-            value: (identifier))
-          (struct_field_value
-            field: (identifier)
-            value: (identifier)))))))
+        (expression_statement
+          (struct_literal
+            name: (identifier)
+            (struct_field_value
+              field: (identifier)
+              value: (identifier))
+            (struct_field_value
+              field: (identifier)
+              value: (identifier))))))))
 
 ===============
 Impl with self method
@@ -160,24 +161,25 @@ impl Point {
           (self_parameter)))
       return_type: (primitive_type)
       body: (block
-        (call_expression
-          callee: (identifier)
-          arguments: (argument_list
-            (binary_expression
+        (expression_statement
+          (call_expression
+            callee: (identifier)
+            arguments: (argument_list
               (binary_expression
-                (field_access
-                  object: (identifier)
-                  field: (identifier))
-                (field_access
-                  object: (identifier)
-                  field: (identifier)))
-              (binary_expression
-                (field_access
-                  object: (identifier)
-                  field: (identifier))
-                (field_access
-                  object: (identifier)
-                  field: (identifier))))))))))
+                (binary_expression
+                  (field_access
+                    object: (identifier)
+                    field: (identifier))
+                  (field_access
+                    object: (identifier)
+                    field: (identifier)))
+                (binary_expression
+                  (field_access
+                    object: (identifier)
+                    field: (identifier))
+                  (field_access
+                    object: (identifier)
+                    field: (identifier)))))))))))
 
 ===============
 Trait impl
@@ -202,4 +204,78 @@ impl Display for Point {
           (self_parameter)))
       return_type: (primitive_type)
       body: (block
-        (string_literal)))))
+        (expression_statement
+          (string_literal))))))
+
+===============
+Generic trait impl with closure
+===============
+
+impl<F: Fn1<T1, Response>, T1: FromRequest> Into<fn(Request) -> Response> for F {
+    fn into(self) -> fn(Request) -> Response {
+        let handler = self
+        (req: Request) => {
+            handler(T1::from_request(req))
+        }
+    }
+}
+
+---
+
+(source_file
+  (impl_block
+    (type_parameters
+      (type_parameter
+        name: (identifier)
+        (type_bounds
+          (trait_bound
+            trait_name: (identifier)
+            (type_arguments
+              (type_identifier
+                (identifier))
+              (type_identifier
+                (identifier))))))
+      (type_parameter
+        name: (identifier)
+        (type_bounds
+          (trait_bound
+            trait_name: (identifier)))))
+    trait_or_type: (identifier)
+    (type_arguments
+      (function_type
+        (type_identifier
+          (identifier))
+        (type_identifier
+          (identifier))))
+    target_type: (identifier)
+    (impl_method
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (self_parameter)))
+      return_type: (function_type
+        (type_identifier
+          (identifier))
+        (type_identifier
+          (identifier)))
+      body: (block
+        (let_declaration
+          name: (identifier)
+          value: (identifier))
+        (expression_statement
+          (closure
+            (closure_parameter
+              name: (identifier)
+              type: (type_identifier
+                (identifier)))
+            body: (block
+              (expression_statement
+                (call_expression
+                  callee: (identifier)
+                  arguments: (argument_list
+                    (call_expression
+                      callee: (path_expression
+                        (identifier)
+                        (identifier))
+                      arguments: (argument_list
+                        (identifier)))))))))))))

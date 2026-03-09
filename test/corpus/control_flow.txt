@@ -13,10 +13,11 @@ if true {
     (if_expression
       condition: (bool_literal)
       consequence: (block
-        (call_expression
-          callee: (identifier)
-          arguments: (argument_list
-            (integer_literal)))))))
+        (expression_statement
+          (call_expression
+            callee: (identifier)
+            arguments: (argument_list
+              (integer_literal))))))))
 
 ===============
 If-else
@@ -37,15 +38,17 @@ if x > 5 {
         (identifier)
         (integer_literal))
       consequence: (block
-        (call_expression
-          callee: (identifier)
-          arguments: (argument_list
-            (string_literal))))
+        (expression_statement
+          (call_expression
+            callee: (identifier)
+            arguments: (argument_list
+              (string_literal)))))
       alternative: (block
-        (call_expression
-          callee: (identifier)
-          arguments: (argument_list
-            (string_literal)))))))
+        (expression_statement
+          (call_expression
+            callee: (identifier)
+            arguments: (argument_list
+              (string_literal))))))))
 
 ===============
 If-else if
@@ -68,24 +71,27 @@ if x > 10 {
         (identifier)
         (integer_literal))
       consequence: (block
-        (call_expression
-          callee: (identifier)
-          arguments: (argument_list
-            (string_literal))))
+        (expression_statement
+          (call_expression
+            callee: (identifier)
+            arguments: (argument_list
+              (string_literal)))))
       alternative: (if_expression
         condition: (binary_expression
           (identifier)
           (integer_literal))
         consequence: (block
-          (call_expression
-            callee: (identifier)
-            arguments: (argument_list
-              (string_literal))))
+          (expression_statement
+            (call_expression
+              callee: (identifier)
+              arguments: (argument_list
+                (string_literal)))))
         alternative: (block
-          (call_expression
-            callee: (identifier)
-            arguments: (argument_list
-              (string_literal))))))))
+          (expression_statement
+            (call_expression
+              callee: (identifier)
+              arguments: (argument_list
+                (string_literal)))))))))
 
 ===============
 While loop
@@ -137,10 +143,11 @@ for item in items {
     binding: (identifier)
     iterable: (identifier)
     body: (block
-      (call_expression
-        callee: (identifier)
-        arguments: (argument_list
-          (identifier))))))
+      (expression_statement
+        (call_expression
+          callee: (identifier)
+          arguments: (argument_list
+            (identifier)))))))
 
 ===============
 Return with value

@@ -28,8 +28,17 @@
       }
     },
     "_statement_terminator": {
-      "type": "STRING",
-      "value": ";"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_newline"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
     },
     "_statement": {
       "type": "CHOICE",
@@ -6062,7 +6071,7 @@
   "extras": [
     {
       "type": "PATTERN",
-      "value": "[\\s]"
+      "value": "[ \\t\\r\\n]"
     },
     {
       "type": "SYMBOL",
@@ -6071,6 +6080,10 @@
     {
       "type": "SYMBOL",
       "name": "block_comment"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_newline"
     }
   ],
   "conflicts": [

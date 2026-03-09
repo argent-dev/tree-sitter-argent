@@ -32,13 +32,14 @@ module.exports = grammar({
 	name: 'argent',
 
 	extras: $ => [
-		/[\s]/,
+		/[ \t\r\n]/,
 		$.line_comment,
 		$.block_comment,
+		$._newline,
 	],
 
 	externals: $ => [
-		$._newline,  // kept for scanner compatibility but unused
+		$._newline,
 		$._string_content,
 		$._interpolation_start,
 		$._interpolation_end,
@@ -88,7 +89,7 @@ module.exports = grammar({
 
 		// --------------- Statement terminator ---------------
 
-		_statement_terminator: $ => ';',
+		_statement_terminator: $ => choice($._newline, ';'),
 
 		// --------------- Statements ---------------
 
