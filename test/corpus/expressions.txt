@@ -1,0 +1,297 @@
+===============
+Binary arithmetic
+===============
+
+let x = 2 + 3 * 4
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (binary_expression
+      (integer_literal)
+      (binary_expression
+        (integer_literal)
+        (integer_literal)))))
+
+===============
+Comparison operators
+===============
+
+let b = x > 5 && y <= 10
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (binary_expression
+      (binary_expression
+        (identifier)
+        (integer_literal))
+      (binary_expression
+        (identifier)
+        (integer_literal)))))
+
+===============
+Unary negation
+===============
+
+let x = -5
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (unary_expression
+      operand: (integer_literal))))
+
+===============
+Unary not
+===============
+
+let b = !true
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (unary_expression
+      operand: (bool_literal))))
+
+===============
+Function call
+===============
+
+print("hello")
+
+---
+
+(source_file
+  (expression_statement
+    (call_expression
+      callee: (identifier)
+      arguments: (argument_list
+        (string_literal)))))
+
+===============
+Method call
+===============
+
+items.push(42)
+
+---
+
+(source_file
+  (expression_statement
+    (method_call
+      object: (identifier)
+      method: (identifier)
+      arguments: (argument_list
+        (integer_literal)))))
+
+===============
+Chained method calls
+===============
+
+items.iter().map(f).collect()
+
+---
+
+(source_file
+  (expression_statement
+    (method_call
+      object: (method_call
+        object: (method_call
+          object: (identifier)
+          method: (identifier)
+          arguments: (argument_list))
+        method: (identifier)
+        arguments: (argument_list
+          (identifier)))
+      method: (identifier)
+      arguments: (argument_list))))
+
+===============
+Field access
+===============
+
+let x = point.x
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (field_access
+      object: (identifier)
+      field: (identifier))))
+
+===============
+Index expression
+===============
+
+let first = arr[0]
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (index_expression
+      object: (identifier)
+      index: (integer_literal))))
+
+===============
+Try operator
+===============
+
+let val = get_value()?
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (try_expression
+      expression: (call_expression
+        callee: (identifier)
+        arguments: (argument_list)))))
+
+===============
+Range expression
+===============
+
+let r = 1..10
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (range_expression
+      start: (integer_literal)
+      end: (integer_literal))))
+
+===============
+Inclusive range
+===============
+
+let r = 1..=10
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (range_expression
+      start: (integer_literal)
+      end: (integer_literal))))
+
+===============
+Cast expression
+===============
+
+let y = x as f64
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (cast_expression
+      expression: (identifier)
+      target_type: (primitive_type))))
+
+===============
+Assignment
+===============
+
+x = 10
+
+---
+
+(source_file
+  (assignment
+    target: (identifier)
+    value: (integer_literal)))
+
+===============
+Compound assignment
+===============
+
+x += 5
+
+---
+
+(source_file
+  (compound_assignment
+    target: (identifier)
+    value: (integer_literal)))
+
+===============
+HashMap literal
+===============
+
+let m = #{ "a": 1, "b": 2 }
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (hashmap_literal
+      (hashmap_entry
+        key: (string_literal)
+        value: (integer_literal))
+      (hashmap_entry
+        key: (string_literal)
+        value: (integer_literal)))))
+
+===============
+Tuple literal
+===============
+
+let t = (1, "hello")
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (tuple_expression
+      (integer_literal)
+      (string_literal))))
+
+===============
+Array repeat
+===============
+
+let arr = [0; 10]
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (array_repeat
+      value: (integer_literal)
+      count: (integer_literal))))
+
+===============
+Path expression
+===============
+
+let c = Color::Red
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (field_access
+      object: (identifier)
+      field: (identifier))))

@@ -1,0 +1,153 @@
+===============
+Simple function
+===============
+
+fn greet() {
+  print("hello")
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (call_expression
+        callee: (identifier)
+        arguments: (argument_list
+          (string_literal))))))
+
+===============
+Function with params and return type
+===============
+
+fn add(a: i32, b: i32) -> i32 {
+  a + b
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        (typed_parameter
+          name: (identifier)
+          type: (primitive_type)))
+      (parameter
+        (typed_parameter
+          name: (identifier)
+          type: (primitive_type))))
+    return_type: (primitive_type)
+    body: (block
+      (binary_expression
+        (identifier)
+        (identifier)))))
+
+===============
+Generic function
+===============
+
+fn first<T>(arr: T[]) -> T {
+  arr[0]
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (type_parameters
+      (type_parameter
+        name: (identifier)))
+    parameters: (parameter_list
+      (parameter
+        (typed_parameter
+          name: (identifier)
+          type: (array_type
+            (type_identifier
+              (identifier))))))
+    return_type: (type_identifier
+      (identifier))
+    body: (block
+      (index_expression
+        object: (identifier)
+        index: (integer_literal)))))
+
+===============
+Public function
+===============
+
+pub fn hello() -> string {
+  "world"
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    return_type: (primitive_type)
+    body: (block
+      (string_literal))))
+
+===============
+Function with default parameter
+===============
+
+fn greet(name: string = "world") {
+  print(name)
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        (typed_parameter
+          name: (identifier)
+          type: (primitive_type)
+          default: (string_literal))))
+    body: (block
+      (call_expression
+        callee: (identifier)
+        arguments: (argument_list
+          (identifier))))))
+
+===============
+Function with trait bounds
+===============
+
+fn display<T: Display + Eq>(x: T) {
+  print(x)
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    (type_parameters
+      (type_parameter
+        name: (identifier)
+        (type_bounds
+          (trait_bound
+            trait_name: (identifier))
+          (trait_bound
+            trait_name: (identifier)))))
+    parameters: (parameter_list
+      (parameter
+        (typed_parameter
+          name: (identifier)
+          type: (type_identifier
+            (identifier)))))
+    body: (block
+      (call_expression
+        callee: (identifier)
+        arguments: (argument_list
+          (identifier))))))

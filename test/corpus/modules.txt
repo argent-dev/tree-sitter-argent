@@ -1,0 +1,119 @@
+===============
+Use single item
+===============
+
+use std::math::sqrt
+
+---
+
+(source_file
+  (use_declaration
+    (use_path
+      (identifier)
+      (identifier)
+      (identifier))))
+
+===============
+Use multiple items
+===============
+
+use std::math::{ sqrt, PI }
+
+---
+
+(source_file
+  (use_declaration
+    (use_path
+      (identifier)
+      (identifier)
+      (use_list
+        (identifier)
+        (identifier)))))
+
+===============
+Pub use
+===============
+
+pub use std::io::File
+
+---
+
+(source_file
+  (use_declaration
+    (use_path
+      (identifier)
+      (identifier)
+      (identifier))))
+
+===============
+Trait declaration
+===============
+
+trait Display {
+  fn to_string(self) -> string
+}
+
+---
+
+(source_file
+  (trait_declaration
+    name: (identifier)
+    (trait_method
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (self_parameter)))
+      return_type: (primitive_type))))
+
+===============
+Trait with supertrait
+===============
+
+trait Ordered: Eq + Display {
+  fn compare(self, other: Self) -> i32
+}
+
+---
+
+(source_file
+  (trait_declaration
+    name: (identifier)
+    (supertrait_clause
+      (identifier)
+      (identifier))
+    (trait_method
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (self_parameter))
+        (parameter
+          (typed_parameter
+            name: (identifier)
+            type: (type_identifier
+              (identifier)))))
+      return_type: (primitive_type))))
+
+===============
+Trait with associated type
+===============
+
+trait Iterator {
+  type Item
+  fn next(self) -> Item?
+}
+
+---
+
+(source_file
+  (trait_declaration
+    name: (identifier)
+    (associated_type_declaration
+      name: (identifier))
+    (trait_method
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (self_parameter)))
+      return_type: (option_type
+        (type_identifier
+          (identifier))))))

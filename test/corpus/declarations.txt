@@ -1,0 +1,153 @@
+===============
+Let binding
+===============
+
+let x = 5
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (integer_literal)))
+
+===============
+Let with type annotation
+===============
+
+let x: i32 = 5
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    type: (primitive_type)
+    value: (integer_literal)))
+
+===============
+Let mut
+===============
+
+let mut count = 0
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (integer_literal)))
+
+===============
+Let with array type
+===============
+
+let arr: i32[] = [1, 2, 3]
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    type: (array_type
+      (primitive_type))
+    value: (array_literal
+      (integer_literal)
+      (integer_literal)
+      (integer_literal))))
+
+===============
+Const declaration
+===============
+
+const MAX = 100
+
+---
+
+(source_file
+  (const_declaration
+    name: (identifier)
+    value: (integer_literal)))
+
+===============
+Const with type
+===============
+
+const PI: f64 = 3.14159
+
+---
+
+(source_file
+  (const_declaration
+    name: (identifier)
+    type: (primitive_type)
+    value: (float_literal)))
+
+===============
+Type alias
+===============
+
+type Num = i32
+
+---
+
+(source_file
+  (type_alias
+    name: (identifier)
+    target: (primitive_type)))
+
+===============
+Generic type alias
+===============
+
+type Pair<A, B> = (A, B)
+
+---
+
+(source_file
+  (type_alias
+    name: (identifier)
+    (type_parameters
+      (type_parameter
+        name: (identifier))
+      (type_parameter
+        name: (identifier)))
+    target: (tuple_type
+      (type_identifier
+        (identifier))
+      (type_identifier
+        (identifier)))))
+
+===============
+Let tuple destructure
+===============
+
+let (a, b) = (1, 2)
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    name: (identifier)
+    value: (tuple_expression
+      (integer_literal)
+      (integer_literal))))
+
+===============
+Let struct destructure
+===============
+
+let { x, y } = point
+
+---
+
+(source_file
+  (let_declaration
+    pattern: (destructure_pattern
+      (struct_destructure
+        (struct_destructure_field
+          field: (identifier))
+        (struct_destructure_field
+          field: (identifier))))
+    value: (identifier)))

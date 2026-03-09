@@ -1,0 +1,141 @@
+===============
+Simple enum
+===============
+
+enum Color {
+  Red,
+  Green,
+  Blue,
+}
+
+---
+
+(source_file
+  (enum_declaration
+    name: (identifier)
+    (enum_variant
+      name: (identifier))
+    (enum_variant
+      name: (identifier))
+    (enum_variant
+      name: (identifier))))
+
+===============
+Enum with tuple variant
+===============
+
+enum Shape {
+  Circle(f64),
+  Rectangle(f64, f64),
+}
+
+---
+
+(source_file
+  (enum_declaration
+    name: (identifier)
+    (enum_variant
+      name: (identifier)
+      (enum_tuple_body
+        (primitive_type)))
+    (enum_variant
+      name: (identifier)
+      (enum_tuple_body
+        (primitive_type)
+        (primitive_type)))))
+
+===============
+Enum with struct variant
+===============
+
+enum Event {
+  Click { x: i32, y: i32 },
+  KeyPress { key: string },
+}
+
+---
+
+(source_file
+  (enum_declaration
+    name: (identifier)
+    (enum_variant
+      name: (identifier)
+      (enum_struct_body
+        (struct_field
+          name: (identifier)
+          type: (primitive_type))
+        (struct_field
+          name: (identifier)
+          type: (primitive_type))))
+    (enum_variant
+      name: (identifier)
+      (enum_struct_body
+        (struct_field
+          name: (identifier)
+          type: (primitive_type))))))
+
+===============
+Match on enum
+===============
+
+match color {
+  Color::Red => "red",
+  Color::Green => "green",
+  _ => "other",
+}
+
+---
+
+(source_file
+  (expression_statement
+    (match_expression
+      subject: (identifier)
+      (match_arm
+        pattern: (enum_variant_pattern
+          enum_name: (identifier)
+          variant_name: (identifier))
+        body: (string_literal))
+      (match_arm
+        pattern: (enum_variant_pattern
+          enum_name: (identifier)
+          variant_name: (identifier))
+        body: (string_literal))
+      (match_arm
+        pattern: (wildcard_pattern)
+        body: (string_literal)))))
+
+===============
+Match with tuple destructure
+===============
+
+match shape {
+  Shape::Circle(r) => r * r,
+  Shape::Rectangle(w, h) => w * h,
+}
+
+---
+
+(source_file
+  (expression_statement
+    (match_expression
+      subject: (identifier)
+      (match_arm
+        pattern: (enum_variant_pattern
+          enum_name: (identifier)
+          variant_name: (identifier)
+          (binding_pattern
+            (identifier)))
+        body: (binary_expression
+          (identifier)
+          (identifier)))
+      (match_arm
+        pattern: (enum_variant_pattern
+          enum_name: (identifier)
+          variant_name: (identifier)
+          (binding_pattern
+            (identifier))
+          (binding_pattern
+            (identifier)))
+        body: (binary_expression
+          (identifier)
+          (identifier))))))

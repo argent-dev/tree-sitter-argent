@@ -1,0 +1,82 @@
+===============
+Closure with expression body
+===============
+
+let double = (x: i32) => x * 2
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (closure
+      (closure_parameter
+        name: (identifier)
+        type: (primitive_type))
+      body: (binary_expression
+        (identifier)
+        (integer_literal)))))
+
+===============
+Closure with block body
+===============
+
+let add = (a: i32, b: i32) => {
+  let sum = a + b
+  sum
+}
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (closure
+      (closure_parameter
+        name: (identifier)
+        type: (primitive_type))
+      (closure_parameter
+        name: (identifier)
+        type: (primitive_type))
+      body: (block
+        (let_declaration
+          name: (identifier)
+          value: (binary_expression
+            (identifier)
+            (identifier)))
+        (identifier)))))
+
+===============
+Closure without type annotations
+===============
+
+let inc = (x) => x + 1
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (closure
+      (closure_parameter
+        name: (identifier))
+      body: (binary_expression
+        (identifier)
+        (integer_literal)))))
+
+===============
+No-parameter closure
+===============
+
+let greet = () => print("hello")
+
+---
+
+(source_file
+  (let_declaration
+    name: (identifier)
+    value: (closure
+      body: (call_expression
+        callee: (identifier)
+        arguments: (argument_list
+          (string_literal))))))

@@ -1,0 +1,205 @@
+===============
+Simple struct
+===============
+
+struct Point {
+  x: f64,
+  y: f64,
+}
+
+---
+
+(source_file
+  (struct_declaration
+    name: (identifier)
+    (struct_body
+      (struct_field
+        name: (identifier)
+        type: (primitive_type))
+      (struct_field
+        name: (identifier)
+        type: (primitive_type)))))
+
+===============
+Generic struct
+===============
+
+struct Pair<A, B> {
+  first: A,
+  second: B,
+}
+
+---
+
+(source_file
+  (struct_declaration
+    name: (identifier)
+    (type_parameters
+      (type_parameter
+        name: (identifier))
+      (type_parameter
+        name: (identifier)))
+    (struct_body
+      (struct_field
+        name: (identifier)
+        type: (type_identifier
+          (identifier)))
+      (struct_field
+        name: (identifier)
+        type: (type_identifier
+          (identifier))))))
+
+===============
+Struct with default field
+===============
+
+struct Config {
+  port: i32 = 8080,
+  host: string,
+}
+
+---
+
+(source_file
+  (struct_declaration
+    name: (identifier)
+    (struct_body
+      (struct_field
+        name: (identifier)
+        type: (primitive_type)
+        default: (integer_literal))
+      (struct_field
+        name: (identifier)
+        type: (primitive_type)))))
+
+===============
+Pub struct with attribute
+===============
+
+#[json(rename_all = "camelCase")]
+pub struct User {
+  name: string,
+  age: i32,
+}
+
+---
+
+(source_file
+  (struct_declaration
+    (attribute
+      name: (identifier)
+      (attribute_argument
+        key: (identifier)
+        value: (string_literal)))
+    name: (identifier)
+    (struct_body
+      (struct_field
+        name: (identifier)
+        type: (primitive_type))
+      (struct_field
+        name: (identifier)
+        type: (primitive_type)))))
+
+===============
+Impl block
+===============
+
+impl Point {
+  fn new(x: f64, y: f64) -> Point {
+    Point { x: x, y: y }
+  }
+}
+
+---
+
+(source_file
+  (impl_block
+    trait_or_type: (identifier)
+    (impl_method
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (typed_parameter
+            name: (identifier)
+            type: (primitive_type)))
+        (parameter
+          (typed_parameter
+            name: (identifier)
+            type: (primitive_type))))
+      return_type: (type_identifier
+        (identifier))
+      body: (block
+        (struct_literal
+          name: (identifier)
+          (struct_field_value
+            field: (identifier)
+            value: (identifier))
+          (struct_field_value
+            field: (identifier)
+            value: (identifier)))))))
+
+===============
+Impl with self method
+===============
+
+impl Point {
+  fn distance(self) -> f64 {
+    sqrt(self.x * self.x + self.y * self.y)
+  }
+}
+
+---
+
+(source_file
+  (impl_block
+    trait_or_type: (identifier)
+    (impl_method
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (self_parameter)))
+      return_type: (primitive_type)
+      body: (block
+        (call_expression
+          callee: (identifier)
+          arguments: (argument_list
+            (binary_expression
+              (binary_expression
+                (field_access
+                  object: (identifier)
+                  field: (identifier))
+                (field_access
+                  object: (identifier)
+                  field: (identifier)))
+              (binary_expression
+                (field_access
+                  object: (identifier)
+                  field: (identifier))
+                (field_access
+                  object: (identifier)
+                  field: (identifier))))))))))
+
+===============
+Trait impl
+===============
+
+impl Display for Point {
+  fn to_string(self) -> string {
+    "point"
+  }
+}
+
+---
+
+(source_file
+  (impl_block
+    trait_or_type: (identifier)
+    target_type: (identifier)
+    (impl_method
+      name: (identifier)
+      parameters: (parameter_list
+        (parameter
+          (self_parameter)))
+      return_type: (primitive_type)
+      body: (block
+        (string_literal)))))

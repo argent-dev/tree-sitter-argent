@@ -1,0 +1,203 @@
+===============
+If expression
+===============
+
+if true {
+  print(1)
+}
+
+---
+
+(source_file
+  (expression_statement
+    (if_expression
+      condition: (bool_literal)
+      consequence: (block
+        (call_expression
+          callee: (identifier)
+          arguments: (argument_list
+            (integer_literal)))))))
+
+===============
+If-else
+===============
+
+if x > 5 {
+  print("big")
+} else {
+  print("small")
+}
+
+---
+
+(source_file
+  (expression_statement
+    (if_expression
+      condition: (binary_expression
+        (identifier)
+        (integer_literal))
+      consequence: (block
+        (call_expression
+          callee: (identifier)
+          arguments: (argument_list
+            (string_literal))))
+      alternative: (block
+        (call_expression
+          callee: (identifier)
+          arguments: (argument_list
+            (string_literal)))))))
+
+===============
+If-else if
+===============
+
+if x > 10 {
+  print("big")
+} else if x > 5 {
+  print("medium")
+} else {
+  print("small")
+}
+
+---
+
+(source_file
+  (expression_statement
+    (if_expression
+      condition: (binary_expression
+        (identifier)
+        (integer_literal))
+      consequence: (block
+        (call_expression
+          callee: (identifier)
+          arguments: (argument_list
+            (string_literal))))
+      alternative: (if_expression
+        condition: (binary_expression
+          (identifier)
+          (integer_literal))
+        consequence: (block
+          (call_expression
+            callee: (identifier)
+            arguments: (argument_list
+              (string_literal))))
+        alternative: (block
+          (call_expression
+            callee: (identifier)
+            arguments: (argument_list
+              (string_literal))))))))
+
+===============
+While loop
+===============
+
+while x > 0 {
+  x -= 1
+}
+
+---
+
+(source_file
+  (while_statement
+    condition: (binary_expression
+      (identifier)
+      (integer_literal))
+    body: (block
+      (compound_assignment
+        target: (identifier)
+        value: (integer_literal)))))
+
+===============
+Loop
+===============
+
+loop {
+  break
+}
+
+---
+
+(source_file
+  (loop_statement
+    body: (block
+      (break_statement))))
+
+===============
+For-in loop
+===============
+
+for item in items {
+  print(item)
+}
+
+---
+
+(source_file
+  (for_in_statement
+    binding: (identifier)
+    iterable: (identifier)
+    body: (block
+      (call_expression
+        callee: (identifier)
+        arguments: (argument_list
+          (identifier))))))
+
+===============
+Return with value
+===============
+
+fn foo() -> i32 {
+  return 42
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    return_type: (primitive_type)
+    body: (block
+      (return_statement
+        value: (integer_literal)))))
+
+===============
+Return without value
+===============
+
+fn foo() {
+  return
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    body: (block
+      (return_statement))))
+
+===============
+Break and continue
+===============
+
+while true {
+  if done {
+    break
+  }
+  continue
+}
+
+---
+
+(source_file
+  (while_statement
+    condition: (bool_literal)
+    body: (block
+      (expression_statement
+        (if_expression
+          condition: (identifier)
+          consequence: (block
+            (break_statement))))
+      (continue_statement))))
