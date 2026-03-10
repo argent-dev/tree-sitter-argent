@@ -198,6 +198,7 @@ module.exports = grammar({
 		// --------------- Const declarations ---------------
 
 		const_declaration: $ => seq(
+			optional('pub'),
 			'const',
 			field('name', $.identifier),
 			optional(seq(':', field('type', $._type))),
@@ -1022,7 +1023,7 @@ module.exports = grammar({
 		),
 
 		type_arguments: $ => seq(
-			'<',
+			token.immediate('<'),
 			commaSep1($._type),
 			'>',
 		),

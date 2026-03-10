@@ -125,6 +125,57 @@ fn greet(name: string = "world") {
             (identifier)))))))
 
 ===============
+Function with fn type parameter and comparison
+===============
+
+fn lookup(fallback: fn(Request) -> Response) -> Response {
+  let mut i = 0
+  while i < items.len() {
+    i = i + 1
+  }
+  fallback(req)
+}
+
+---
+
+(source_file
+  (function_declaration
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        (typed_parameter
+          name: (identifier)
+          type: (function_type
+            (type_identifier
+              (identifier))
+            (type_identifier
+              (identifier))))))
+    return_type: (type_identifier
+      (identifier))
+    body: (block
+      (let_declaration
+        name: (identifier)
+        value: (integer_literal))
+      (while_statement
+        condition: (binary_expression
+          (identifier)
+          (method_call
+            object: (identifier)
+            method: (identifier)
+            arguments: (argument_list)))
+        body: (block
+          (assignment
+            target: (identifier)
+            value: (binary_expression
+              (identifier)
+              (integer_literal)))))
+      (expression_statement
+        (call_expression
+          callee: (identifier)
+          arguments: (argument_list
+            (identifier)))))))
+
+===============
 Function with trait bounds
 ===============
 
